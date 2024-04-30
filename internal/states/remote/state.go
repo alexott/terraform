@@ -78,7 +78,9 @@ func (s *State) WriteState(state *states.State) error {
 	// We create a deep copy of the state here, because the caller also has
 	// a reference to the given object and can potentially go on to mutate
 	// it after we return, but we want the snapshot at this point in time.
-	s.state = state.DeepCopy()
+	// // We don't need this because copy is done in the caller ()
+	// [state := stateSync.Lock().DeepCopy()](https://github.com/alexott/terraform/blob/1aad29a422512736f3b46054caadc1476faea533/internal/terraform/update_state_hook.go#L11-L12)
+	s.state = state // .DeepCopy()
 
 	return nil
 }
